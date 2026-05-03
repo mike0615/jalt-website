@@ -1,0 +1,19 @@
+{{ if .IsNamedParams }}
+{{ $url := .Get "url" }}
+{{ $title := .Get "title" | default "Listen" }}
+<div class="podcast-embed">
+    <audio controls style="width: 100%;">
+        <source src="{{ $url }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <p><a href="{{ $url }}" download>Download Episode</a></p>
+</div>
+{{ else }}
+{{ $url := .Get 0 }}
+<div class="podcast-embed">
+    <audio controls style="width: 100%;">
+        <source src="{{ $url }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+</div>
+{{ end }}

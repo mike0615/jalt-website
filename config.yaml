@@ -1,0 +1,153 @@
+baseURL: "https://justalittletechnical.com/"
+languageCode: "en-us"
+title: "Just A Little Technical"
+
+outputs:
+  home:
+    - HTML
+    - JSON
+  page:
+    - HTML
+  section:
+    - HTML
+    - RSS
+
+taxonomies:
+  tag: tags
+  category: categories
+  series: series
+
+params:
+  description: "Infrastructure, automation, and technical consulting — by Mike"
+  author: "Mike"
+  email: "mike@justalittletechnical.com"
+  # Brand colors (from JALT palette)
+  primaryColor: "#0066cc"      # Blue
+  secondaryColor: "#ff6b35"    # Orange
+  accentColor: "#00d4aa"       # Teal
+  neutralLight: "#f5f5f5"      # Light gray
+  neutralDark: "#333333"       # Dark gray
+  # Analytics (Plausible)
+  plausibleDomain: "justalittletechnical.com"
+  # Social
+  socialLinks:
+    twitter: "https://x.com/mike0615"
+    linkedin: "https://linkedin.com/in/mike0615"
+    github: "https://github.com/mike0615"
+    mastodon: "https://mastodon.social/@mike0615"
+
+menu:
+  main:
+    - name: "Content"
+      url: "/content/"
+      weight: 1
+    - name: "Blog"
+      url: "/blog/"
+      parent: "Content"
+      weight: 10
+    - name: "Podcast"
+      url: "/podcast/"
+      parent: "Content"
+      weight: 20
+    - name: "Videos"
+      url: "/videos/"
+      parent: "Content"
+      weight: 30
+    - name: "Services"
+      url: "/services/"
+      weight: 2
+    - name: "About"
+      url: "/about/"
+      weight: 3
+    - name: "Resources"
+      url: "/resources/"
+      weight: 4
+    - name: "Contact"
+      url: "/contact/"
+      weight: 5
+
+  footer:
+    - name: "Content"
+      url: "/content/"
+      weight: 1
+    - name: "Blog"
+      url: "/blog/"
+      weight: 10
+    - name: "Podcast"
+      url: "/podcast/"
+      weight: 20
+    - name: "Videos"
+      url: "/videos/"
+      weight: 30
+    - name: "Services"
+      url: "/services/"
+      weight: 40
+    - name: "About"
+      url: "/about/"
+      weight: 50
+    - name: "Resources"
+      url: "/resources/"
+      weight: 60
+    - name: "Contact"
+      url: "/contact/"
+      weight: 70
+    - name: "Privacy"
+      url: "/privacy/"
+      weight: 80
+    - name: "Terms"
+      url: "/terms/"
+      weight: 90
+
+# Output formats for podcast RSS
+mediaTypes:
+  "application/rss+xml":
+    suffixes:
+      - xml
+
+outputFormats:
+  RSS:
+    mediaType: "application/rss+xml"
+    baseName: "feed"
+
+# Content settings
+privacy:
+  disqus:
+    disable: true
+  googleAnalytics:
+    disable: true
+  instagram:
+    simple: false
+  twitter:
+    simple: false
+  vimeo:
+    disable: true
+  youtube:
+    privacyEnhanced: true
+
+# Security
+security:
+  exec:
+    allow:
+      - ^dart-sass$
+      - ^go$
+
+# Frontmatter defaults
+frontmatter:
+  date:
+    - :filename
+    - publishDate
+    - lastmod
+    - date
+
+# Markup (Goldmark renderer)
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+    extensions:
+      table: true
+      strikethrough: true
+      typographer: true
+  highlight:
+    lineNos: true
+    style: monokai

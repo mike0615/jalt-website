@@ -1,0 +1,62 @@
+{{- $podcast := .Site.Params.podcast | default .Site.Title -}}
+{{- $description := .Site.Params.description -}}
+{{- $author := .Site.Params.author -}}
+{{- $email := .Site.Params.email -}}
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+    xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0">
+    <channel>
+        <title>{{ $podcast }}</title>
+        <link>{{ .Site.BaseURL }}</link>
+        <description>{{ $description }}</description>
+        <language>en-us</language>
+        <atom:link href="{{ .Permalink }}" rel="self" type="application/rss+xml"/>
+        <lastBuildDate>{{ now.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</lastBuildDate>
+        <itunes:author>{{ $author }}</itunes:author>
+        <itunes:email>{{ $email }}</itunes:email>
+        <itunes:explicit>no</itunes:explicit>
+        {{ with .Site.Params.podcastCover }}
+        <itunes:image href="{{ . | absURL }}"/>
+        {{ end }}
+        <googleplay:author>{{ $author }}</googleplay:author>
+        {{ with .Site.Params.podcastCover }}
+        <googleplay:image url="{{ . | absURL }}"/>
+        {{ end }}
+        
+        {{ range where .Pages "Type" "podcast" }}
+        <item>
+            <title>{{ .Title }}</title>
+            <link>{{ .Permalink }}</link>
+            <guid>{{ .Permalink }}</guid>
+            <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
+            <description>{{ .Summary }}</description>
+            <content:encoded><![CDATA[{{ .Content }}]]></content:encoded>
+            
+            {{ if .Params.audio }}
+            <enclosure url="{{ .Params.audio | absURL }}" length="0" type="audio/mpeg"/>
+            {{ end }}
+            
+            {{ with .Params.season }}
+            <itunes:season>{{ . }}</itunes:season>
+            {{ end }}
+            
+            {{ with .Params.episode }}
+            <itunes:episode>{{ . }}</itunes:episode>
+            {{ end }}
+            
+            {{ with .Params.duration }}
+            <itunes:duration>{{ . }}</itunes:duration>
+            {{ end }}
+            
+            <itunes:explicit>no</itunes:explicit>
+            
+            {{ with .Params.artwork }}
+            <itunes:image href="{{ . | absURL }}"/>
+            {{ end }}
+        </item>
+        {{ end }}
+    </channel>
+</rss>

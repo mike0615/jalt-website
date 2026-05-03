@@ -1,0 +1,42 @@
+{{ define "header" }}
+    {{ partial "header.html" . }}
+{{ end }}
+
+{{ define "main" }}
+<div class="hero">
+    <div class="hero-content">
+        <h1>{{ .Title }}</h1>
+        <p class="hero-tagline">{{ .Site.Params.description }}</p>
+        <div class="hero-cta">
+            <a href="/blog/" class="btn btn-primary">Read Latest</a>
+            <a href="/contact/" class="btn btn-secondary">Get in Touch</a>
+        </div>
+    </div>
+</div>
+
+<section class="content-preview">
+    <h2>Latest Content</h2>
+    <div class="content-grid">
+        {{ range first 3 (where .Site.RegularPages "Type" "blog") }}
+        <article class="content-card">
+            <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+            <p>{{ .Summary }}</p>
+            <a href="{{ .Permalink }}" class="read-more">Read More →</a>
+        </article>
+        {{ end }}
+    </div>
+</section>
+
+<section class="newsletter-signup">
+    <h2>Subscribe to Updates</h2>
+    <p>Get the latest articles and podcasts delivered to your inbox.</p>
+    <form class="newsletter-form">
+        <input type="email" placeholder="your@email.com" required>
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+    </form>
+</section>
+{{ end }}
+
+{{ define "footer" }}
+    {{ partial "footer.html" . }}
+{{ end }}

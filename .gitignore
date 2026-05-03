@@ -1,0 +1,28 @@
+# Hugo
+/public/
+/resources/_gen/
+/assets/jsconfig.json
+*.js.map
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local

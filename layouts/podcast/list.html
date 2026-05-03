@@ -1,0 +1,47 @@
+{{ define "header" }}
+    {{ partial "header.html" . }}
+{{ end }}
+
+{{ define "main" }}
+<div class="podcast-header">
+    <h1>{{ .Title }}</h1>
+    <p>{{ .Description }}</p>
+</div>
+
+<div class="podcast-list">
+    {{ $paginator := .Paginate (where .Pages "Type" "podcast") 20 }}
+    
+    {{ range $paginator.Pages }}
+    <article class="podcast-item">
+        {{ if .Params.artwork }}<img src="{{ .Params.artwork }}" alt="" class="podcast-art">{{ end }}
+        <div class="podcast-info">
+            <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+            {{ with .Params.season }}<p class="podcast-meta">Season {{ . }} {{ if .Params.episode }}| Episode {{ .Params.episode }}{{ end }}</p>{{ end }}
+            {{ with .Params.duration }}<p class="duration">{{ . }}</p>{{ end }}
+            <p>{{ .Summary }}</p>
+            <div class="podcast-actions">
+                <a href="{{ .Permalink }}" class="btn btn-primary">Listen & Read Notes</a>
+            </div>
+        </div>
+    </article>
+    {{ end }}
+    
+    {{ if gt $paginator.TotalPages 1 }}
+    <nav class="pagination">
+        {{ if $paginator.HasPrev }}<a href="{{ $paginator.Prev.URL }}">← Previous</a>{{ end }}
+        <span>Page {{ $paginator.PageNumber }} of {{ $paginator.TotalPages }}</span>
+        {{ if $paginator.HasNext }}<a href="{{ $paginator.Next.URL }}">Next →</a>{{ end }}
+    </nav>
+    {{ end }}
+</div>
+
+<div class="podcast-subscribe">
+    <h3>Subscribe</h3>
+    <p><a href="/podcast/feed.xml">RSS Feed</a></p>
+    <p>Available on Spotify, Apple Podcasts, and other platforms</p>
+</div>
+{{ end }}
+
+{{ define "footer" }}
+    {{ partial "footer.html" . }}
+{{ end }}

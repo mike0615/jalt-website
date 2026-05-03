@@ -1,0 +1,47 @@
+{{ define "header" }}
+    {{ partial "header.html" . }}
+{{ end }}
+
+{{ define "main" }}
+<div class="list-header">
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+</div>
+
+<div class="list-container">
+    {{ $paginator := .Paginate (where .Pages "Type" "!=" "") 10 }}
+    
+    <div class="list-items">
+        {{ range $paginator.Pages }}
+        <article class="list-item">
+            <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+            {{ if .Params.cover }}<img src="{{ .Params.cover }}" alt="" class="list-thumb">{{ end }}
+            <div class="list-meta">
+                {{ if .IsPage }}
+                    {{ if .Params.date }}<time>{{ .Date.Format "January 2, 2006" }}</time>{{ end }}
+                {{ end }}
+                {{ with .Params.tags }}
+                <span class="tags">
+                    {{ range first 3 . }}<a href="/tags/{{ . | urlize }}/">#{{ . }}</a> {{ end }}
+                </span>
+                {{ end }}
+            </div>
+            <p>{{ .Summary }}</p>
+            <a href="{{ .Permalink }}" class="read-more">Read More →</a>
+        </article>
+        {{ end }}
+    </div>
+    
+    {{ if gt $paginator.TotalPages 1 }}
+    <nav class="pagination">
+        {{ if $paginator.HasPrev }}<a href="{{ $paginator.Prev.URL }}">← Previous</a>{{ end }}
+        <span>Page {{ $paginator.PageNumber }} of {{ $paginator.TotalPages }}</span>
+        {{ if $paginator.HasNext }}<a href="{{ $paginator.Next.URL }}">Next →</a>{{ end }}
+    </nav>
+    {{ end }}
+</div>
+{{ end }}
+
+{{ define "footer" }}
+    {{ partial "footer.html" . }}
+{{ end }}
